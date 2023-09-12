@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itmo.evastudent.mapper.CourseMapper">
+
+    <resultMap id="BaseResultMap" type="com.itmo.evastudent.model.entity.Course">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="courseChineseName" column="courseChineseName" jdbcType="VARCHAR"/>
+            <result property="courseEnglishName" column="courseEnglishName" jdbcType="VARCHAR"/>
+            <result property="teacherIds" column="teacherIds" jdbcType="VARCHAR"/>
+            <result property="grade" column="grade" jdbcType="INTEGER"/>
+            <result property="major" column="major" jdbcType="TINYINT"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,courseChineseName,courseEnglishName,
+        teacherIds,grade,major,
+        createTime,updateTime,isDelete
+    </sql>
+</mapper>

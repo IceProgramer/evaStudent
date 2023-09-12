@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itmo.evastudent.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.itmo.evastudent.model.entity.Student">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="studentNumber" column="studentNumber" jdbcType="VARCHAR"/>
+            <result property="studentPassword" column="studentPassword" jdbcType="VARCHAR"/>
+            <result property="studentName" column="studentName" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+            <result property="studentClassId" column="studentClassId" jdbcType="BIGINT"/>
+            <result property="major" column="major" jdbcType="TINYINT"/>
+            <result property="grade" column="grade" jdbcType="INTEGER"/>
+            <result property="studentStatus" column="studentStatus" jdbcType="TINYINT"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,studentNumber,studentPassword,
+        studentName,gender,age,
+        studentClassId,major,grade,
+        studentStatus,createTime,updateTime,
+        isDelete
+    </sql>
+</mapper>
