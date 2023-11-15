@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itmo.evastudent.mapper.TargetMapper">
+
+    <resultMap id="BaseResultMap" type="com.itmo.evastudent.model.entity.Target">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="targetChineseName" column="targetChineseName" jdbcType="VARCHAR"/>
+            <result property="targetEnglishName" column="targetEnglishName" jdbcType="VARCHAR"/>
+            <result property="targetLevel" column="targetLevel" jdbcType="TINYINT"/>
+            <result property="nationality" column="nationality" jdbcType="TINYINT"/>
+            <result property="targetId" column="targetId" jdbcType="BIGINT"/>
+            <result property="weight" column="weight" jdbcType="DECIMAL"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,targetChineseName,targetEnglishName,
+        targetLevel,nationality,targetId,
+        weight,createTime,updateTime,
+        isDelete
+    </sql>
+</mapper>

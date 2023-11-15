@@ -7,12 +7,12 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 课程表
- * @TableName course
+ * 教师表
+ * @TableName teacher
  */
-@TableName(value ="course")
+@TableName(value ="teacher")
 @Data
-public class Course implements Serializable {
+public class Teacher implements Serializable {
     /**
      * id
      */
@@ -20,29 +20,44 @@ public class Course implements Serializable {
     private Long id;
 
     /**
-     * 课程中文名称
+     * 教师名称
      */
-    private String courseChineseName;
+    private String teacherName;
 
     /**
-     * 课程英文名
+     * 性别
      */
-    private String courseEnglishName;
+    private Integer gender;
 
     /**
-     * 教师id列表【json】
+     * 年龄
      */
-    private String teacherIds;
+    private Integer age;
 
     /**
-     * 学生年级
+     * 职位
      */
-    private Integer grade;
+    private Integer position;
+
+    /**
+     * 职称
+     */
+    private Integer title;
 
     /**
      * 专业（0-计算机，1-自动化）
      */
     private Integer major;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 国籍（0-俄罗斯，1-中国）
+     */
+    private Integer nationality;
 
     /**
      * 创建时间

@@ -1,18 +1,19 @@
 package com.itmo.evastudent.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
 /**
- * 课程表
- * @TableName course
+ * 一级指标分数表
+ * @TableName targetScore
  */
-@TableName(value ="course")
+@TableName(value ="targetScore")
 @Data
-public class Course implements Serializable {
+public class TargetScore implements Serializable {
     /**
      * id
      */
@@ -20,29 +21,34 @@ public class Course implements Serializable {
     private Long id;
 
     /**
-     * 课程中文名称
+     * 学生id
      */
-    private String courseChineseName;
+    private Long studentId;
 
     /**
-     * 课程英文名
+     * 教师id
      */
-    private String courseEnglishName;
+    private Long teacherId;
 
     /**
-     * 教师id列表【json】
+     * 课程id
      */
-    private String teacherIds;
+    private Long courseId;
 
     /**
-     * 学生年级
+     * 一级指标id
      */
-    private Integer grade;
+    private Long targetId;
 
     /**
-     * 专业（0-计算机，1-自动化）
+     * 评测id
      */
-    private Integer major;
+    private Long evaluationId;
+
+    /**
+     * 一级分数
+     */
+    private BigDecimal score;
 
     /**
      * 创建时间

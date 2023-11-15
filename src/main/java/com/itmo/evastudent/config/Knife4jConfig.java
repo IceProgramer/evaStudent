@@ -27,7 +27,7 @@ public class Knife4jConfig {
                         .build())
                 .select()
                 // 指定 Controller 扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.itmo.evaStudent.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.itmo.evastudent.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
