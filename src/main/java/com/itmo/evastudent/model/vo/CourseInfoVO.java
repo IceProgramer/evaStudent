@@ -5,13 +5,11 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 课程 Request
- *
  * @author <a href="https://github.com/IceProgramer">chenjiahan</a>
- * @create 2023/9/12 19:21
+ * @create 2023/12/11 08:50
  */
 @Data
-public class CourseVO {
+public class CourseInfoVO {
     /**
      * id
      */
@@ -26,4 +24,9 @@ public class CourseVO {
      * 课程英文名
      */
     private String courseEnglishName;
+
+    /**
+     * 教师信息列表
+     */
+    private List<TeacherVO> teacherList;
 }

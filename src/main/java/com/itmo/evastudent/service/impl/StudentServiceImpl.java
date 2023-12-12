@@ -1,16 +1,11 @@
 package com.itmo.evastudent.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itmo.evastudent.common.ErrorCode;
-import com.itmo.evastudent.constant.EvaluationContent;
 import com.itmo.evastudent.exception.BusinessException;
 import com.itmo.evastudent.manager.UserManager;
-import com.itmo.evastudent.mapper.EvaluationMapper;
-import com.itmo.evastudent.model.entity.Evaluation;
 import com.itmo.evastudent.model.entity.Student;
-import com.itmo.evastudent.model.enums.EvaluationStatusEnum;
 import com.itmo.evastudent.model.vo.LoginStudentVO;
 import com.itmo.evastudent.service.CourseService;
 import com.itmo.evastudent.service.StudentService;
@@ -40,23 +35,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
     private CourseService courseService;
 
     @Resource
-    private EvaluationMapper evaluationMapper;
-
-    @Resource
     private UserManager userManager;
-
 
     @Override
     public LoginStudentVO studentLogin(String studentAccount, String studentPassword, HttpServletRequest request) {
-        Evaluation evaluation = evaluationMapper.selectOne(Wrappers.<Evaluation>lambdaQuery()
-                .eq(Evaluation::getEvaluationStatus, EvaluationStatusEnum.OPENING.getValue())
-                .select(Evaluation::getId)
-                .last("limit 1"));
-        if (evaluation == null) {
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "没有评测正在进行中");
-        }
-        EvaluationContent.set(evaluation);
-
         // 1. 校验
         if (StringUtils.isAnyBlank(studentAccount, studentPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");

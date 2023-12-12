@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @author <a href="https://github.com/IceProgramer">chenjiahan</a>
  * @create 2023/9/6 16:24
  */
-public enum CourseDoneEnum {
+public enum CourseStatusEnum {
 
     UNDONE("未完成", 0),
     DONE("完成", 1);
@@ -19,7 +19,7 @@ public enum CourseDoneEnum {
 
     private final String name;
 
-    CourseDoneEnum(String name, Integer value) {
+    CourseStatusEnum(String name, Integer value) {
         this.value = value;
         this.name = name;
     }
@@ -43,11 +43,11 @@ public enum CourseDoneEnum {
      * @param value
      * @return
      */
-    public static CourseDoneEnum getEnumByValue(String value) {
+    public static CourseStatusEnum getEnumByValue(String value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        for (CourseDoneEnum anEnum : CourseDoneEnum.values()) {
+        for (CourseStatusEnum anEnum : CourseStatusEnum.values()) {
             if (anEnum.name.equals(value)) {
                 return anEnum;
             }
@@ -61,11 +61,11 @@ public enum CourseDoneEnum {
      * @param value
      * @return
      */
-    public static CourseDoneEnum getEnumByName(Integer value) {
+    public static CourseStatusEnum getEnumByName(Integer value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        for (CourseDoneEnum anEnum : CourseDoneEnum.values()) {
+        for (CourseStatusEnum anEnum : CourseStatusEnum.values()) {
             if (anEnum.value.equals(value)) {
                 return anEnum;
             }
