@@ -2,6 +2,7 @@ package com.itmo.evastudent.aop;
 
 import com.itmo.evastudent.common.ErrorCode;
 import com.itmo.evastudent.exception.BusinessException;
+import com.itmo.evastudent.manager.UserManager;
 import com.itmo.evastudent.model.entity.Student;
 import com.itmo.evastudent.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ import java.util.Objects;
 public class AuthInterceptor {
 
     @Resource
-    private StudentService studentService;
+    private UserManager userManager;
 
     /**
      * 执行拦截
@@ -37,22 +38,22 @@ public class AuthInterceptor {
      */
     @Around("execution(* com.itmo.evastudent.controller.*.*(..))")
     public Object doInterceptor(ProceedingJoinPoint joinPoint) throws Throwable {
-//        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-//        HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
-//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-//        String name = signature.getName();
-//
-//        // 跳过登录请求
-//        if (Objects.equals(name, "studentLogin")) {
-//            return joinPoint.proceed();
-//        }
-//
-//        // 当前登录用户
-////        Student loginUser = studentService.getLoginStudent(request);
-////        if (loginUser == null) {
-////            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-////        }
-//        // 通过权限校验，放行
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        String name = signature.getName();
+
+        // 跳过登录请求
+        if (Objects.equals(name, "studentLogin")) {
+            return joinPoint.proceed();
+        }
+
+        // 当前登录用户
+        Student loginUser = userManager.getLoginStudent(request);
+        if (loginUser == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        // 通过权限校验，放行
         return joinPoint.proceed();
     }
 }
