@@ -57,12 +57,12 @@ public class CourseController {
      * @return 课程信息
      */
     @GetMapping("/get/course/info")
-    public BaseResponse<CourseInfoVO> getCourseVOById(Long courseId) {
+    public BaseResponse<CourseInfoVO> getCourseVOById(Long courseId, HttpServletRequest request) {
         if (courseId == null || courseId <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "课程id为空");
         }
 
-        CourseInfoVO courseVO = courseService.getCourseById(courseId);
+        CourseInfoVO courseVO = courseService.getCourseById(courseId, request);
 
         return ResultUtils.success(courseVO);
     }

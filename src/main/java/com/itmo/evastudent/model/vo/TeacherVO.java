@@ -12,6 +12,11 @@ import java.util.List;
 public class TeacherVO {
 
     /**
+     * 教师id
+     */
+    private Long teacherId;
+
+    /**
      * 教师名称
      */
     private String teacherName;

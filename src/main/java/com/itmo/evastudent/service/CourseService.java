@@ -44,5 +44,5 @@ public interface CourseService extends IService<Course> {
      * @param courseId 课程id
      * @return 课程信息
      */
-    CourseInfoVO getCourseById(Long courseId);
+    CourseInfoVO getCourseById(Long courseId, HttpServletRequest request);
 }

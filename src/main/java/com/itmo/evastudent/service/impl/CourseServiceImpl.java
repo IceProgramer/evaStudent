@@ -136,7 +136,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 .eq(TargetScore::getStudentId, student.getId())
                 .eq(TargetScore::getScore, 0.00)
                 .eq(TargetScore::getEvaluationId, currentEvaluation.getId())
-                .select(TargetScore::getCourseId, TargetScore::getTargetId));
+                .select(TargetScore::getCourseId));
 
         return getCourseVOList(targetScoreList);
     }
@@ -147,11 +147,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         Evaluation currentEvaluation = evaluationManager.getCurrentEvaluation();
 
 
-        List<TargetScore> targetScoreList = scoreMapper.selectList(Wrappers.<TargetScore>lambdaQuery()
-                .eq(TargetScore::getStudentId, student.getId())
-                .ne(TargetScore::getScore, 0.00)
-                .eq(TargetScore::getEvaluationId, currentEvaluation.getId())
-                .select(TargetScore::getCourseId));
+        List<TargetScore> targetScoreList = scoreMapper.
+                selectDoneCourseIdList(student.getId(), currentEvaluation.getId());
 
         return getCourseVOList(targetScoreList);
     }
@@ -167,12 +164,12 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         // 获取课程id列表
         List<Long> courseIdList = targetScoreList.stream()
                 .map(TargetScore::getCourseId)
+                .distinct()
                 .collect(Collectors.toList());
 
         if (courseIdList.size() <= 0) {
             return null;
         }
-
         // 获取课程信息
         List<Course> courseList = baseMapper.selectList(Wrappers.<Course>lambdaQuery()
                 .in(Course::getId, courseIdList)
@@ -187,8 +184,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
     @Override
-    public CourseInfoVO getCourseById(Long courseId) {
-
+    public CourseInfoVO getCourseById(Long courseId, HttpServletRequest request) {
+        Student loginStudent = userManager.getLoginStudent(request);
         Course course = baseMapper.selectOne(Wrappers.<Course>lambdaQuery()
                 .eq(Course::getId, courseId)
                 .last("limit 1"));
@@ -197,7 +194,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "课程信息不存在");
         }
 
-        return getCourseVO(course);
+        return getCourseVO(course, loginStudent);
     }
 
     /**
@@ -206,7 +203,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
      * @param course 课程信息
      * @return CourseVO
      */
-    private CourseInfoVO getCourseVO(Course course) {
+    private CourseInfoVO getCourseVO(Course course, Student loginStudent) {
         Evaluation currentEvaluation = evaluationManager.getCurrentEvaluation();
         Long evaluationId = currentEvaluation.getId();
         CourseInfoVO courseInfoVO = new CourseInfoVO();
@@ -218,6 +215,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         List<TargetScore> targetScoreList = scoreMapper.selectList(Wrappers.<TargetScore>lambdaQuery()
                 .eq(TargetScore::getEvaluationId, evaluationId)
                 .eq(TargetScore::getCourseId, courseInfoVO.getId())
+                .eq(TargetScore::getStudentId, loginStudent.getId())
                 .select(TargetScore::getTargetId, TargetScore::getTeacherId, TargetScore::getScore, TargetScore::getId));
 
         Map<Long, List<TargetScore>> teacherScoreMap = targetScoreList.stream()
@@ -249,7 +247,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             TeacherVO teacherVO = new TeacherVO();
             Long teacherId = entry.getKey();
             List<TargetScore> scoreList = entry.getValue();
-
+            teacherVO.setTeacherId(teacherId);
             teacherVO.setTeacherName(teacherMap.get(teacherId));
 
             // 获取一级指标信息
